@@ -1,4 +1,4 @@
-name := "src"
+name := "Bot-tender"
 
 version := "0.1"
 
