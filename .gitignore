@@ -1,2 +1,6 @@
 *.class
 *.log
+
+/src/target/
+/src/project/
+/src/.idea/
