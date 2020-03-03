@@ -1,6 +1,7 @@
 import Chat.Tokenizer
 import Chat.Tokens._
 import Utils.ClinksCalculator.calculateCombination
+import Utils.ClinksCalculator.factorial
 
 import scala.io.StdIn
 
