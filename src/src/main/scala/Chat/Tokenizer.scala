@@ -1,15 +1,21 @@
 package Chat
 
-import Tokens._
+import Chat.Tokens._
 import Utils.Dictionary.dictionary
-import Utils.SpellChecker._
 
 class Tokenizer(input: String) {
   /**
     * Separate the user's input into tokens.
     */
-  // TODO - Step 3
-  def tokenize(): Unit = ???
+  def tokenize(): Unit = {
+    val toRemove = ".,!?*".toSet
+    val inputNormalized = input.filterNot(toRemove)
+      .replace('\'', ' ')
+      .replaceAllLiterally("  ", " ")
+      .split(" ")
+      .map(w => w -> matchToken(dictionary.apply(w))).toMap
+    println(inputNormalized)
+  }
 
   /**
     * Get the next token of the user input, or OEL if there is no more token.
@@ -17,4 +23,17 @@ class Tokenizer(input: String) {
     */
   // TODO - Step 3
   def nextToken(): (String, Token) = ???
+
+  def matchToken(s: String): Token = s match {
+    case "bonjour" => BONJOUR
+    case "je" => JE
+    case "etre" => ETRE
+    case "vouloir" => VOULOIR
+    case "et" => ET
+    case "ou" => OU
+    case "biere" => BIERE
+    case "croissant" => CROISSANT
+    case "\n" => EOL
+    case _ => UNKNOWN
+  }
 }
