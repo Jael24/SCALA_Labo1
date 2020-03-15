@@ -16,15 +16,12 @@ class Tokenizer(input: String) {
    */
   def tokenize(): Unit = {
     val toRemove = ".,!?*".toSet
-    val inputNormalized = input.filterNot(toRemove)
+    input.filterNot(toRemove)
       .replace('\'', ' ')
       .replaceAllLiterally("  ", " ")
       .split(" ")
-      .map(w => getClosestWordInDictionary(w) -> matchToken(w)).toVector
-    for (i <- 0 until inputNormalized.length) {
-      tokens.addOne(inputNormalized.apply(i))
-    }
-    tokens.addOne("EOL" -> EOL)
+      .map(w => getClosestWordInDictionary(w) -> matchToken(w))
+      .map(t => tokens.addOne(t))
   }
 
   /**
@@ -34,13 +31,24 @@ class Tokenizer(input: String) {
    */
   def nextToken(): (String, Token) = {
     count += 1
-    tokens.toVector.apply(count)
+    if (count < tokens.length) {
+      tokens.toVector.apply(count)
+    } else {
+      "EOL" -> EOL
+    }
   }
 
+  /**
+   * Match word and Token
+   * @param s the word
+   * @return the corresponding token
+   */
   def matchToken(s: String): Token = {
-    val word = if (dictionary.contains(s)) s else getClosestWordInDictionary(s)
+    val word = getClosestWordInDictionary(s)
     if (!dictionary.contains(word)) {
-      if (word.startsWith("_")) PSEUDO else if (word forall Character.isDigit) NUM else UNKNOWN
+      if (word.startsWith("_")) PSEUDO
+      else if (word forall Character.isDigit) NUM
+      else UNKNOWN
     } else {
       dictionary.apply(word) match {
         case "bonjour" => BONJOUR
