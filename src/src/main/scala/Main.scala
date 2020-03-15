@@ -1,12 +1,10 @@
 import Chat.Tokenizer
 import Chat.Tokens._
 import Utils.ClinksCalculator.calculateCombination
-import Utils.SpellChecker.stringDistance
 
 import scala.io.StdIn
 
 object Main extends App {
-  println(stringDistance("yes", "ios"))
   println("Bienvenue au Chill-Out !")
 
   while (true) {

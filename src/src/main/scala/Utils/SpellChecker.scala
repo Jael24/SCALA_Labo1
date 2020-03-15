@@ -24,7 +24,6 @@ object SpellChecker {
    * @return an integer value, which indicates the Levenshtein distance between "s1" and "s2"
    */
   // TODO comment (and translate to tail rec)
-  // TODO store the distance in an array?
   def listDistance(l1: List[Char], l2: List[Char]): Int = (l1, l2) match {
     case (Nil, l2) => l2.length
     case (l1, Nil) => l1.length
@@ -45,11 +44,10 @@ object SpellChecker {
    * @param misspelledWord the misspelled word to correct
    * @return the closest word from "misspelledWord"
    */
-  // TODO - Step 2
   def getClosestWordInDictionary(misspelledWord: String): String = {
     var score = ("", Int.MaxValue)
 
-    // Check if not a number or a pseudo
+    // Return the word if it's a number or a username
     if (misspelledWord.forall(_.isDigit) || misspelledWord.startsWith("_")) {
       return misspelledWord
     } else {
@@ -62,6 +60,6 @@ object SpellChecker {
       }
     }
 
-    score._1
+    dictionary(score._1)
   }
 }
