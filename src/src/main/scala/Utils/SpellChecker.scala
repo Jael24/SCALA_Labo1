@@ -12,7 +12,7 @@ object SpellChecker {
    * @return an integer value, which indicates the Levenshtein distance between "s1" and "s2"
    */
   def stringDistance(s1: String, s2: String): Int = {
-    listDistance(s1.toList, s2.toList, 0)
+    listDistance(s1.toList, s2.toList)
   }
 
   /**
@@ -22,13 +22,13 @@ object SpellChecker {
    * @param l2 the second word
    * @return an integer value, which indicates the Levenshtein distance between "s1" and "s2"
    */
-  def listDistance(l1: List[Char], l2: List[Char], acc: Int): Int = (l1, l2) match {
+  def listDistance(l1: List[Char], l2: List[Char]): Int = (l1, l2) match {
     case (Nil, l2) => l2.length
     case (l1, Nil) => l1.length
     case (x :: xs, y :: ys) => if (x == y) {
-      listDistance(xs, ys, acc + 1)
+      listDistance(xs, ys)
     } else {
-      1 + min(listDistance(l1, ys, acc + 1), min(listDistance(xs, l2, acc + 1), listDistance(xs, ys, acc + 1)))
+      1 + min(listDistance(l1, ys), min(listDistance(xs, l2), listDistance(xs, ys)))
     }
   }
 
