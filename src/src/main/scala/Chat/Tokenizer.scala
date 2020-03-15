@@ -40,6 +40,7 @@ class Tokenizer(input: String) {
 
   /**
    * Match word and Token
+   *
    * @param s the word
    * @return the corresponding token
    */

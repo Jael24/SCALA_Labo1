@@ -1,6 +1,5 @@
 package Utils
 
-import scala.math.max
 import scala.math.min
 import Dictionary.dictionary
 
@@ -13,7 +12,7 @@ object SpellChecker {
    * @return an integer value, which indicates the Levenshtein distance between "s1" and "s2"
    */
   def stringDistance(s1: String, s2: String): Int = {
-    listDistance(s1.toList, s2.toList)
+    listDistance(s1.toList, s2.toList, 0)
   }
 
   /**
@@ -23,17 +22,13 @@ object SpellChecker {
    * @param l2 the second word
    * @return an integer value, which indicates the Levenshtein distance between "s1" and "s2"
    */
-  // TODO comment (and translate to tail rec)
-  def listDistance(l1: List[Char], l2: List[Char]): Int = (l1, l2) match {
+  def listDistance(l1: List[Char], l2: List[Char], acc: Int): Int = (l1, l2) match {
     case (Nil, l2) => l2.length
     case (l1, Nil) => l1.length
     case (x :: xs, y :: ys) => if (x == y) {
-      listDistance(xs, ys)
+      listDistance(xs, ys, acc + 1)
     } else {
-      1 + min(
-        min(listDistance(l1, ys), listDistance(xs, l2)),
-        listDistance(xs, ys)
-      )
+      1 + min(listDistance(l1, ys, acc + 1), min(listDistance(xs, l2, acc + 1), listDistance(xs, ys, acc + 1)))
     }
   }
 
