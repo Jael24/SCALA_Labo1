@@ -46,6 +46,7 @@ object SpellChecker {
     if (misspelledWord.forall(_.isDigit) || misspelledWord.startsWith("_")) {
       return misspelledWord
     } else {
+      // Else, get the smallest distance between the given word and a word in the dictionary
       for (key <- dictionary.keys) {
         val temp = stringDistance(misspelledWord, key)
 
